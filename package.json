@@ -1,0 +1,27 @@
+{
+  "name": "mensagens-automaticas-ipsu",
+  "version": "1.0.0",
+  "main": "app.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./src/app.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@types/node": "^22.13.1",
+    "express": "^4.21.2",
+    "node-cron": "^3.0.3",
+    "qrcode": "^1.5.4",
+    "whatsapp-web.js": "^1.26.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node-cron": "^3.0.11",
+    "@types/qrcode": "^1.5.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
+  }
+}

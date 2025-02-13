@@ -4,4 +4,5 @@ COPY package.json .
 COPY . .
 RUN npm install
 RUN npm i sharp
-CMD ["npm","start"]
+RUN npm run build
+CMD ["npm","run","start"]

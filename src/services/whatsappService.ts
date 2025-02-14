@@ -1,5 +1,6 @@
 import { Client, LocalAuth } from "whatsapp-web.js";
 import { messageCronJob } from "./cronService";
+import fs from "fs";
 
 let client: Client | null = null;
 let qrCode: string | null = null;
@@ -16,8 +17,10 @@ const equipe1 = [
   "556294340706",
   "556293315408",
   "556184762222",
+  "556299183193",
 ];
 const equipe2 = [
+  "",
   "556281436512",
   "556291060645",
   "556291218523",
@@ -43,7 +46,7 @@ export const initializeWhatsAppClient = async () => {
   client = new Client({
     authStrategy: new LocalAuth(),
     puppeteer: {
-      headless: true,
+      headless: false,
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
       executablePath: "/opt/homebrew/bin/chromium",
     },
@@ -78,6 +81,19 @@ export const getQrCode = () => {
     return qrCode;
   } else {
     return null;
+  }
+};
+
+export const clientDestroy = async () => {
+  if (client) {
+    await client.destroy();
+    client = null;
+
+    try {
+      fs.rmSync("./.wwebjs_auth", { recursive: true, force: true });
+    } catch (err) {
+      console.error("Erro ao remover sessão:", err);
+    }
   }
 };
 
@@ -131,4 +147,20 @@ export const sendMessageToContact = async (message: string) => {
   }
 
   return { results };
+};
+
+export const sendMessageToTeam = async (team: string, message: string) => {
+  if (!client || !isReady) {
+    return { error: "WhatsApp não está pronto. Conecte-se primeiro." };
+  }
+  const contacts = team === "equipe1" ? equipe1 : equipe2;
+
+  for (const contact of contacts) {
+    const chatId = `${contact}@c.us`;
+    try {
+      await client.sendMessage(chatId, message);
+    } catch (error) {
+      console.error(`❌ Erro ao enviar para ${contact}:`, error);
+    }
+  }
 };

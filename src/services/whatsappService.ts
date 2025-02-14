@@ -45,7 +45,7 @@ export const initializeWhatsAppClient = async () => {
     puppeteer: {
       headless: true,
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
-      executablePath: "/opt/homebrew/bin/chromium",
+      executablePath: "/usr/bin/chromium",
     },
   });
 

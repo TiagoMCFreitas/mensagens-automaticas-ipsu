@@ -5,12 +5,7 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "esModuleInterop": true,
-    "strict": true,
-    "strictNullChecks": false,
-  "strictFunctionTypes": false,
-  "strictBindCallApply": false,
-  "noImplicitThis": false,
-  "noImplicitReturns": false
+    "strict": true
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]

@@ -1,7 +1,7 @@
 FROM node:18.19.1
 WORKDIR /app
 COPY package.json .
-COPY src .
+COPY . .
 RUN npm install
 RUN npm i sharp
 RUN npm run build

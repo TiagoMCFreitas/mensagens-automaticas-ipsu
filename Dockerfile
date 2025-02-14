@@ -5,4 +5,5 @@ COPY . .
 RUN npm install
 RUN npm i sharp
 RUN npm run build
-CMD ["node", "./dist/app.js"]
+RUN npm install -g typescript ts-node
+CMD ["ts-node", "app.js"]

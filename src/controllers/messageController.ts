@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
 import {
   getQrCode,
-  getQrCodeImage,
+  clientDestroy,
   initializeWhatsAppClient,
   isWhatsAppReady,
+  sendMessageToTeam,
 } from "../services/whatsappService";
-
 
 export const startSession = async (req: Request, res: Response) => {
   await initializeWhatsAppClient();
@@ -22,6 +22,28 @@ export const startSession = async (req: Request, res: Response) => {
   return promise;
 };
 
+export const clientDestroyHandler = async (req: Request, res: Response) => {
+  await clientDestroy()
+    .then(() => {
+      return res.status(200).json({ success: "Sessão encerrada com sucesso." });
+    })
+    .catch((error) => {
+      return res.status(500).json({ error: error });
+    });
+};
+
+export const sendMessageToTeamHandler = async (req: Request, res: Response) => {
+  const { team, message } = req.body;
+
+  await sendMessageToTeam(team, message)
+    .then((response) => {
+      return res.status(200).json(response);
+    })
+    .catch((error) => {
+      return res.status(500).json({ error: error });
+    });
+};
+
 export const checkSessionStatus = async (req: Request, res: Response) => {
   if (isWhatsAppReady()) {
     return res
@@ -33,7 +55,6 @@ export const checkSessionStatus = async (req: Request, res: Response) => {
       .json({ error: "WhatsApp não está conectado. Escaneie o QR Code." });
   }
 };
-
 
 export const startSessionHandler = async (req: Request, res: Response) => {
   await startSession(req, res)

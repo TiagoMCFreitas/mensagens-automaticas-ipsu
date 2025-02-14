@@ -2,9 +2,8 @@
   "name": "mensagens-automaticas-ipsu",
   "version": "1.0.0",
   "main": "app.ts",
-  "type": "module",
   "scripts": {
-    
+
     "build": "tsc -b",
     "start": "node ./dist/app.js"
   },

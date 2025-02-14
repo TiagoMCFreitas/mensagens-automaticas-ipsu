@@ -5,7 +5,7 @@ import fs from "fs";
 let client: Client | null = null;
 let qrCode: string | null = null;
 let isReady: boolean = false;
-let alternateEquipe: number = 2;
+let alternateEquipe: number = 1;
 
 const equipe1 = [
   "556299774352",

@@ -2,7 +2,7 @@ import cron from "node-cron";
 import { sendMessageToContact } from "./whatsappService";
 
 export function messageCronJob(alternateEquipe: number) {
-  const job = cron.schedule("0 13 * * 3", async () => {
+  const job = cron.schedule("30 13 * * 3", async () => {
     console.log("⏳ Iniciando envio de mensagens semanal...");
 
     const message = `📢 Lembrete para a Equipe ${

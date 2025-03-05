@@ -1,5 +1,8 @@
 import { Client, LocalAuth } from "whatsapp-web.js";
-import { messageCronJob } from "./cronService";
+import {
+  lembreteEstudarAsMusicasCronJob,
+  lembreteTonalidadeCronJob,
+} from "./cronService";
 import fs from "fs";
 
 let client: Client | null = null;
@@ -20,7 +23,6 @@ const equipe1 = [
   "556299183193",
 ];
 const equipe2 = [
-  "",
   "556281436512",
   "556291060645",
   "556291218523",
@@ -35,8 +37,6 @@ const equipe2 = [
   "556281907486",
   "556292685213",
 ];
-
-messageCronJob(alternateEquipe);
 
 export const initializeWhatsAppClient = async () => {
   if (client) {
@@ -103,7 +103,27 @@ export const isWhatsAppReady = () => {
   return isReady;
 };
 
-export const sendMessageToContact = async (message: string) => {
+export const whoEquipeIs = async () => {
+  if (alternateEquipe) {
+    return "Equipe: " + alternateEquipe;
+  } else {
+    return "Houve um erro ao identificar a equipe.";
+  }
+};
+
+export const alternateEquipeHandler = async () => {
+  if (alternateEquipe === 1) {
+    alternateEquipe = 2;
+    return "Equipe 2";
+  } else {
+    alternateEquipe = 1;
+    return "Equipe 1";
+  }
+};
+export const sendMessageToContact = async (
+  message: string,
+  alternate: boolean
+) => {
   if (!client || !isReady) {
     return { error: "WhatsApp não está pronto. Conecte-se primeiro." };
   }
@@ -126,7 +146,9 @@ export const sendMessageToContact = async (message: string) => {
       "556299183193@c.us",
       "Mensagem enviada para equipe 1."
     );
-    alternateEquipe = 2;
+    if (alternate) {
+      alternateEquipe = 2;
+    }
   } else {
     for (const contact of equipe2) {
       const chatId = `${contact}@c.us`;
@@ -143,7 +165,9 @@ export const sendMessageToContact = async (message: string) => {
       "556299183193@c.us",
       "Mensagem enviada para equipe 2."
     );
-    alternateEquipe = 1;
+    if (alternate) {
+      alternateEquipe = 1;
+    }
   }
 
   return { results };
@@ -164,3 +188,6 @@ export const sendMessageToTeam = async (team: string, message: string) => {
     }
   }
 };
+
+lembreteTonalidadeCronJob(alternateEquipe === 1 ? 1 : 2);
+lembreteEstudarAsMusicasCronJob();

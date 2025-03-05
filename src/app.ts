@@ -4,6 +4,8 @@ import {
   checkSessionStatusHandler,
   sendMessageToTeamHandler,
   clientDestroyHandler,
+  qualEquipeVaiReceberAMensagem,
+  alternaEquipeHandler,
 } from "../src/controllers/messageController";
 
 const app = express();
@@ -22,6 +24,12 @@ app.post("/send-message-to-team", sendMessageToTeamHandler);
 
 // 🔹 Encerrar sessão
 app.post("/client-destroy", clientDestroyHandler);
+
+// 🔹 Qual equipe vai receber a mensagem
+app.get("/qual-equipe-vai-receber-a-mensagem", qualEquipeVaiReceberAMensagem);
+
+// 🔹 Alterna equipe
+app.post("/alterna-equipe", alternaEquipeHandler);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

@@ -4,6 +4,8 @@ import {
   clientDestroy,
   initializeWhatsAppClient,
   isWhatsAppReady,
+  alternateEquipeHandler,
+  whoEquipeIs,
   sendMessageToTeam,
 } from "../services/whatsappService";
 
@@ -54,6 +56,29 @@ export const checkSessionStatus = async (req: Request, res: Response) => {
       .status(404)
       .json({ error: "WhatsApp não está conectado. Escaneie o QR Code." });
   }
+};
+
+export const qualEquipeVaiReceberAMensagem = async (
+  req: Request,
+  res: Response
+) => {
+  await whoEquipeIs()
+    .then((response) => {
+      return res.status(200).json(response);
+    })
+    .catch((error) => {
+      return res.status(500).json({ error: error });
+    });
+};
+
+export const alternaEquipeHandler = async (req: Request, res: Response) => {
+  await alternateEquipeHandler()
+    .then((response) => {
+      return res.status(200).json(response);
+    })
+    .catch((error) => {
+      return res.status(500).json({ error: error });
+    });
 };
 
 export const startSessionHandler = async (req: Request, res: Response) => {

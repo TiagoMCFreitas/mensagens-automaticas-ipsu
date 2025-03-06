@@ -6,7 +6,7 @@ import {
   clientDestroyHandler,
   qualEquipeVaiReceberAMensagem,
   alternaEquipeHandler,
-} from "../src/controllers/messageController";
+} from "./controllers/messageController";
 
 const app = express();
 const port = process.env.PORT || 3000;
